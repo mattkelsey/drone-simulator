@@ -108,10 +108,14 @@
       camera.position.set(-70,50,-10);
       scene.add(camera);
 
-      // light source
+      // light sources
       var light = new THREE.PointLight(0xffffff);
       light.position.set(-100,200,100);
       scene.add(light);
+
+      var light2 = new THREE.PointLight(0xffffff);
+      light2.position.set(100,200,-100);
+      scene.add(light2);
 
       // controls for moving the camera
       var controls = new THREE.OrbitControls(camera, renderer.domElement);
