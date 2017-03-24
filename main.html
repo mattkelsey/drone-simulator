@@ -31,46 +31,43 @@
       document.body.appendChild(renderer.domElement);
       renderer.setClearColor(0x3f4a51, 1);
 
-
-
       // setup materials for making things look decent
   	  var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
       var green = new THREE.MeshPhongMaterial( { color: 0xAAFFAA, specular: 0x111111, shininess: 200 } );
 
-
       // start adding objects to the scene, these are the planes that make up the floor and walls
       var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), material);
-      plane.position.set(0, 4, 0);
+      plane.position.set(50, 4, 50);
       plane.rotation.x = -Math.PI / 2;
       scene.add(plane);
 
       var wall1 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
-      wall1.position.set(0, 14, -50);
+      wall1.position.set(50, 14, 0);
       wall1.rotation.x = 0;
       plane.material.side = THREE.DoubleSide;
       scene.add(wall1);
 
       var wall2 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
-      wall2.position.set(-50, 14, 0);
+      wall2.position.set(0, 14, 50);
       wall2.rotation.y = -Math.PI / 2;
       plane.material.side = THREE.DoubleSide;
       scene.add(wall2);
 
       var wall3 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
-      wall3.position.set(0, 14, 50);
+      wall3.position.set(50, 14, 100);
       wall3.rotation.y = 0;
       plane.material.side = THREE.DoubleSide;
       scene.add(wall3);
 
       var wall4 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
-      wall4.position.set(50, 14, 0);
+      wall4.position.set(100, 14, 50);
       wall4.rotation.y = -Math.PI / 2;
       plane.material.side = THREE.DoubleSide;
       scene.add(wall4);
 
       // add a torus that will be the drone
       var torus = new THREE.Mesh(new THREE.TorusGeometry(5, 5, 80, 60, Math.PI * 2), new THREE.MeshNormalMaterial());
-      torus.position.set(0, 12, 0);
+      torus.position.set(50, 12, 50);
       torus.rotation.x = Math.PI / 2;
       // add the torus to the scene
       scene.add(torus);
@@ -105,7 +102,7 @@
 
       // create camera and position in the scene
       camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
-      camera.position.set(-70,50,-10);
+      camera.position.set(-20,50,40);
       scene.add(camera);
 
       // light sources
@@ -119,6 +116,7 @@
 
       // controls for moving the camera
       var controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(50, 10, 50);
 
   }
   // threejs updater
