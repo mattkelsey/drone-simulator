@@ -13,7 +13,7 @@
 
   init();
   animate();
-
+  var torus;
 
   // initialize scene
   function init() {
@@ -66,39 +66,16 @@
       scene.add(wall4);
 
       // add a torus that will be the drone
+<<<<<<< Updated upstream
       var torus = new THREE.Mesh(new THREE.TorusGeometry(5, 5, 80, 60, Math.PI * 2), new THREE.MeshNormalMaterial());
       torus.position.set(50, 12, 50);
+=======
+      torus = new THREE.Mesh(new THREE.TorusGeometry(5, 5, 80, 60, Math.PI * 2), new THREE.MeshNormalMaterial());
+      torus.position.set(0, 12, 0);
+>>>>>>> Stashed changes
       torus.rotation.x = Math.PI / 2;
       // add the torus to the scene
       scene.add(torus);
-
-
-      // make movement controls for the torus object
-      window.addEventListener("keydown", function(event) {
-          switch (event.keyCode) {
-              case 87: //w
-                  torus.position.x += 1;
-                  break;
-              case 83: //s
-                  torus.position.x -= 1;
-                  break;
-              case 65:
-                  torus.position.z -= 1;
-                  break;
-              case 68:
-                  torus.position.z += 1;
-                  break;
-              case 81:
-                  torus.position.y += 1;
-                  break;
-              case 69:
-                  torus.position.y -= 1;
-                  break;
-              case 192:
-                  console.log("Camera Position:", camera.position.x + " " + camera.position.y + " " + camera.position.z)
-                  break;
-          }
-      });
 
       // create camera and position in the scene
       camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
@@ -119,10 +96,32 @@
       controls.target.set(50, 10, 50);
 
   }
+
+  function updatePos() {
+      var delta = clock.getDelta(); // seconds.
+      var moveDistance = 200 * delta; // 200 pixels per second
+      var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+
+      if ( keyboard.pressed("A") )
+        MovingCube.rotation.y += rotateAngle;
+        if ( keyboard.pressed("D") )
+            MovingCube.rotation.y -= rotateAngle;
+
+    if ( keyboard.pressed("left") )
+    	MovingCube.position.x -= moveDistance;
+    if ( keyboard.pressed("right") )
+    	MovingCube.position.x += moveDistance;
+    if ( keyboard.pressed("up") )
+    	MovingCube.position.z -= moveDistance;
+    if ( keyboard.pressed("down") )
+    	MovingCube.position.z += moveDistance;
+  }
+
   // threejs updater
   function animate() {
       requestAnimationFrame(animate);
       // render scene
+      updatePos();
       renderer.render(scene, camera);
   }
 
