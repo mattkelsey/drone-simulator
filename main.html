@@ -72,32 +72,7 @@
       // add the torus to the scene
       scene.add(torus);
 
-      // make movement controls for the torus object
-      window.addEventListener("keydown", function(event) {
-          switch (event.keyCode) {
-              case 87: //w
-                  torus.position.x += 1;
-                  break;
-              case 83: //s
-                  torus.position.x -= 1;
-                  break;
-              case 65:
-                  torus.position.z -= 1;
-                  break;
-              case 68:
-                  torus.position.z += 1;
-                  break;
-              case 81:
-                  torus.position.y += 1;
-                  break;
-              case 69:
-                  torus.position.y -= 1;
-                  break;
-              case 192:
-                  console.log("Camera Position:", camera.position.x + " " + camera.position.y + " " + camera.position.z)
-                  break;
-              }
-      });
+      var roomba1 = new roomba(scene);
 
       // create camera and position in the scene
       camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
@@ -116,7 +91,50 @@
       // controls for moving the camera
       var controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.target.set(50, 10, 50);
+  }
 
+  function roomba(scene) {
+      this.mesh = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 4, 100), new THREE.MeshNormalMaterial());;
+      this.mesh.position.set(0, 8, 0);
+      scene.add(this.mesh);
+
+      var material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+      var geometry = new THREE.Geometry();
+      geometry.vertices.push(
+          new THREE.Vector3( 5, 2, 0 ),
+          new THREE.Vector3( 0, 2, 0 )
+      );
+      this.line = new THREE.Line( geometry, material );
+      this.mesh.add(this.line);
+
+      var localRoombaContext = this;
+
+      // make movement controls for the torus object
+      window.addEventListener("keydown", function(event) {
+          switch (event.keyCode) {
+              case 87: //w
+                localRoombaContext.mesh.position.x += 1;
+                break;
+              case 83: //s
+                localRoombaContext.mesh.position.x -= 1;
+                break;
+              case 65:
+                localRoombaContext.mesh.position.z -= 1;
+                break;
+              case 68:
+                localRoombaContext.mesh.position.z += 1;
+                break;
+              case 81:
+                localRoombaContext.mesh.rotation.y += Math.PI / 32;
+                break;
+              case 69:
+                localRoombaContext.mesh.rotation.y -= Math.PI / 32;
+                break;
+              case 192:
+                console.log("Camera Position:", camera.position.x + " " + camera.position.y + " " + camera.position.z)
+                break;
+            }
+        });
   }
 
   // threejs updater
